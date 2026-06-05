@@ -1,5 +1,5 @@
 import { Text, View, Image, StyleSheet } from 'react-native';
-import StackNavigator from './navigation/stackNavigator';
+import StackNavigator from './navigation/stackNavigation';
 
 function App() {
   return (
