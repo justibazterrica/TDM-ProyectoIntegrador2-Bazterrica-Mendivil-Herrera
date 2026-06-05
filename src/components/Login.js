@@ -1,49 +1,26 @@
 import { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { auth, db } from '../firebase/config';
+import { TurboModuleRegistry } from 'react-native';
 
-
-function Register(props) {
+function Login(props) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
 
   function onSubmit() {
-    auth.createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-
-        db.collection('users').add({
-          email: userCredential.user.email,
-          username: username,
-        })
-
-        .then(() => {
-          props.navigation.navigate('Login');
-        })
-
-        .catch(e => console.log(e));
-
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        props.navigation.navigate('TabNavigator');
       })
-
-
       .catch(error => setError(error));
   }
-
 
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>Registro</Text>
-
-      <TextInput
-        style={styles.field}
-        placeholder="Nombre de usuario"
-        keyboardType="default"
-        onChangeText={text => setUsername(text)}
-        value={username}
-      />
+      <Text style={styles.title}>Login</Text>
 
       <TextInput
         style={styles.field}
@@ -63,11 +40,11 @@ function Register(props) {
       />
 
       <Pressable style={styles.button} onPress={() => onSubmit()}>
-        <Text style={styles.buttonText}>Registrarse</Text>
+        <Text style={styles.buttonText}>Ingresar</Text>
       </Pressable>
 
-      <Pressable onPress={() => props.navigation.navigate("Login")}>
-        <Text style={styles.link}>¿Ya tenés cuenta? Iniciá sesión</Text>
+      <Pressable onPress={() => props.navigation.navigate('Register')}>
+        <Text style={styles.link}>¿No tenés cuenta? Registrate</Text>
       </Pressable>
 
     </View>
@@ -81,14 +58,12 @@ const styles = StyleSheet.create({
     padding: 24,
   },
 
-  
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 24,
     textAlign: 'center',
   },
-
 
   field: {
     borderWidth: 1,
@@ -98,7 +73,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontSize: 16,
   },
-
+  
 
   button: {
     backgroundColor: "#282ecc",
@@ -114,13 +89,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
- 
 
   link: {
-    color: '#555',
+    color: 'black',
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
 });
 
-export default Register;
+export default Login;
