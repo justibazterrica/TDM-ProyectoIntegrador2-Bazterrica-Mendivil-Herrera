@@ -1,6 +1,6 @@
 import Register from "./components/Register";
 
-function Register(){
+function RegisterScreen(){
     return(
         <view>
                 <Register />
@@ -8,4 +8,4 @@ function Register(){
     )
 };
 
-export default Register;
+export default RegisterScreen;
