@@ -1,11 +1,13 @@
-import Register from "./components/Register";
+import React from 'react';
+import { View } from 'react-native';
+import RegisterComponent from '../components/RegisterComponent';
 
 function Register(){
     return(
-        <view>
-                <Register />
-        </view>
-    )
+        <View>
+            <RegisterComponent />
+        </View>
+    );
 };
 
 export default Register;

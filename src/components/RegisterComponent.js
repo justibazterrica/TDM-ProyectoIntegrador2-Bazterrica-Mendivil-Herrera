@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-function LogIn(){
+function Register () {
     return (
         <View>
-            <Text>LoginInfo</Text>
+            <Text>Register</Text>
         </View>
     );
 }
 
-export default LogIn;
+export default Register;
