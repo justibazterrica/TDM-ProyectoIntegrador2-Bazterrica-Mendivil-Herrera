@@ -75,3 +75,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 15 }
 }); 
+
+export default CrearPost;
