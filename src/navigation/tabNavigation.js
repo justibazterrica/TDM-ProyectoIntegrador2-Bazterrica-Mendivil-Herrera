@@ -5,6 +5,7 @@ import Home from '../screens/HomePage';
 import Profile from '../screens/Profile';
 import Post from '../screens/CrearPost';
 
+
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {

@@ -2,27 +2,20 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
 import { db, auth } from '../firebase/config';
 
-function CrearPost( props ) {
-    const [descripcion, setDescripcion] = useState('');
+
+function comentar( props ) {
+    const [comentario, setComentario] = useState('');
     const usuarioActual = auth.currentUser;
 
-    function newPost() {
-        if (descripcion === ""){
-            return (
-                <View style={styles.container}>
-                    <Text style = {styles.error}>La descripción no puede estar vacía.</Text>
-                </View>
-            )}
+    function nuevoComentario() {
+
         db.collection('posts').add({
-            descripcion: descripcion,          
+            comentario: comentario,
             email: usuarioActual.email,           
-            createdAt: Date.now(),                 
-            likes: [],                                                  
+                                                            
         })
         .then(() => {
-           
-            setDescripcion('');
-            props.navigation.navigate('Home', { screen: 'Home' });
+            setComentario('');
         })
         .catch(error => {
             console.log("Error al crear el post: ", error);
@@ -31,15 +24,15 @@ function CrearPost( props ) {
     
     return (
        <View style={styles.container}>
-            <Text style={styles.title}>Nuevo Post</Text>
+            <Text style={styles.title}>Comentarios</Text>
             <TextInput
                 style={styles.input}
-                placeholder="¿Qué estás pensando?"
+                placeholder="Comentario.."
                 multiline
-                onChangeText={text => setDescripcion(text)}
-                value={descripcion}
+                onChangeText={text => setComentario(text)}
+                value={comentario}
             />
-            <Pressable style={styles.button} onPress={newPost}>
+            <Pressable style={styles.button} onPress={nuevoComentario}>
                 <Text style={styles.buttonText}>Publicar</Text>
             </Pressable>
         </View>
@@ -71,4 +64,4 @@ const styles = StyleSheet.create({
         marginBottom: 15 }
 }); 
 
-export default CrearPost;
+export default comentar;

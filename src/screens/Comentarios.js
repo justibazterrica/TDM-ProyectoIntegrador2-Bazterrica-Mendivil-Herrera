@@ -1,45 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { db } from '../firebase/config';
-import Post from '../components/Posteo'; 
+import NuevoComentario from '../components/NuevoComentario';
+import Comentar from '../components/Comentar';
 
-function HomePage() {
-    const [listaPosts, setListaPosts] = useState([]);
+function Comentarios() {
+    const [listaComentarios, setListaComentarios] = useState([]);
 
     useEffect(() => {
-        db.collection('posts')
+        db.collection('comentarios')
             .orderBy('createdAt', 'desc')
             .onSnapshot(docs => {
-                let postsAux = [];
+                let comentariosAux = [];
                 docs.forEach(doc => {
-                    postsAux.push({
+                    comentariosAux.push({
                         id: doc.id,
-                        data: doc.data() 
+                        datacoment: doc.data() 
                     });
                 });
-                setListaPosts(postsAux);
+                setListaComentarios(comentariosAux);
             }, error => {
-                console.log("Error al obtener posts: ", error);
+                console.log("Error al obtener comentarios: ", error);
             });
     }, []);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Home</Text>
-            {listaPosts.length === 0 ? (
-                <Text style={styles.noPosts}>No hay publicaciones aún.</Text>
+            <Comentar />
+            <Text style={styles.title}>Comentarios</Text>
+            {listaComentarios.length === 0 ? (
+                <Text style={styles.nocoments}>No hay comentarios aún.</Text>
             ) : (
                 <FlatList
-                    data={listaPosts}
+                    data={listaComentarios}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <Post data={item.data} />}
+                    renderItem={({ item }) => <NuevoComentario data={item.datacoment} />}
                 />
             )}
         </View>
     );
 }
 
-export default HomePage;
+export default Comentarios;
 
 const styles = StyleSheet.create({
     container: { flex: 1, 
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold', 
         marginVertical: 15, 
         textAlign: 'center' },
-    noPosts: { textAlign: 'center', 
+    nocoments: { textAlign: 'center', 
         marginTop: 20, 
         color: '#777' },
     post: { marginBottom: 15,
