@@ -3,7 +3,8 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 
 export default function NuevoComentario( props ) {
     
-    if (props.data == {}) {
+    const datosComentario = props.data;
+    if (datosComentario == {}) {
         return (
             <View style={styles.post}>
                 <Text style={styles.noData}>No hay datos para mostrar.</Text>
@@ -11,7 +12,6 @@ export default function NuevoComentario( props ) {
         );
     } 
     else {
-        const datosComentario = props.data;
         return (
             <View style={styles.post}>
                 <Text style={styles.text}>Creador: {datosComentario.email}</Text>

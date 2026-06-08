@@ -6,6 +6,7 @@ import Comentar from '../components/Comentar';
 
 function Comentarios(props) {
     const [listaComentarios, setListaComentarios] = useState([]);
+    console.log('props comments', props);
 
     useEffect(() => {
         db.collection('posts')
@@ -13,12 +14,15 @@ function Comentarios(props) {
             .onSnapshot(docs => {
                 let comentariosAux = [];
                 docs.forEach(doc => {
-                    comentariosAux.push({
-                        id: doc.id,
-                        datacoment: doc.data() 
-                    });
+                    if(doc.id === props.route.params.id){
+                        comentariosAux.push({
+                            id: doc.id,
+                            datacoment: doc.data() 
+                        });
+                    }
                 });
-                setListaComentarios(comentariosAux);
+                console.log('comentariosAux', comentariosAux);
+                setListaComentarios(comentariosAux[0].datacoment.Coments);
             }, error => {
                 console.log("Error al obtener comentarios: ", error);
             });
@@ -34,7 +38,7 @@ function Comentarios(props) {
                 <FlatList
                     data={listaComentarios}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <NuevoComentario data={item.datacoment} />}
+                    renderItem={({ item }) => <NuevoComentario data={item} />}
                 />
             )}
         </View>

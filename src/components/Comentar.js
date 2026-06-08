@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
-import { db, auth, firebase, firestore, FieldValue } from '../firebase/config';
+import { db, auth } from '../firebase/config';
+import firebase from 'firebase';
 
 
 function comentar( props ) {
     const [comentario, setComentario] = useState('');
     const usuarioActual = auth.currentUser;
-    const idcomentario = props.id;
+    const idComentario = props.id;
 
     function nuevoComentario() {
 
         db.collection('posts')
-            .doc(idcomentario)
+            .doc(idComentario)
             .update({
-                Coments: firebase.firestore.FieldValue.arrayUnion(comentario)
-       })
+                Coments: firebase.firestore.FieldValue.arrayUnion({
+                    comentario: comentario,
+                    email: usuarioActual.email,
+                })
+            })
         .then(() => {
             setComentario('');
         })

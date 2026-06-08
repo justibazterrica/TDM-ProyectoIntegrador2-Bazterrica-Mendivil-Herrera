@@ -32,7 +32,7 @@ function HomePage( props ) {
                 <FlatList
                     data={listaPosts}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <Post data={item.data} navigation={props.navigation} />}
+                    renderItem={({ item }) => <Post id={item.id} data={item.data} navigation={props.navigation} />}
                 />
             )}
         </View>
