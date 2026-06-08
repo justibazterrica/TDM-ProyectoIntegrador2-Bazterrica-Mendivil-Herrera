@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native';
 import { auth, db } from '../firebase/config';
 
@@ -8,6 +8,14 @@ function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+useEffect(() => {
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      props.navigation.navigate('TabNavigator');
+    }
+  });
+}, []);
 
   function onSubmit() { 
 
