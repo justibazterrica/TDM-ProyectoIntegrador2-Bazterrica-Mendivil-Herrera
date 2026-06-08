@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import { db } from '../firebase/config';
 import NuevoComentario from '../components/NuevoComentario';
 import Comentar from '../components/Comentar';
@@ -30,6 +30,9 @@ function Comentarios(props) {
 
     return (
         <View style={styles.container}>
+            <Pressable style={styles.button} onPress={() => props.navigation.navigate('TabNavigator')}>
+                <Text style={styles.buttonText}>Volver</Text>
+            </Pressable>
             <Comentar  id={props.route.params.id} />
             <Text style={styles.title}>Comentarios</Text>
             {listaComentarios.length === 0 ? (
@@ -41,7 +44,7 @@ function Comentarios(props) {
                     renderItem={({ item }) => <NuevoComentario data={item} />}
                 />
             )}
-        </View>
+         </View>
     );
 }
 
@@ -51,6 +54,20 @@ const styles = StyleSheet.create({
     container: { flex: 1, 
         padding: 10, 
         backgroundColor: '#f5f5f5' },
+    button: {
+        backgroundColor: '#007bff',
+        paddingVertical: 5,
+        paddingHorizontal: 5,
+        borderRadius: 8,
+        alignSelf: 'flex-start',
+        marginBottom: 12,
+    },
+    buttonText: {
+        color: '#ffffff',
+        fontWeight: '700',
+        fontSize: 16,
+        textAlign: 'center',
+    },
     title: { fontSize: 24, 
         fontWeight: 'bold', 
         marginVertical: 15, 
