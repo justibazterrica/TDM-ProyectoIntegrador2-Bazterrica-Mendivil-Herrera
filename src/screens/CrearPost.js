@@ -17,7 +17,8 @@ function CrearPost( props ) {
             descripcion: descripcion,          
             email: usuarioActual.email,           
             createdAt: Date.now(),                 
-            likes: [],                                                  
+            likes: [],
+            Coments: []                                                  
         })
         .then(() => {
            

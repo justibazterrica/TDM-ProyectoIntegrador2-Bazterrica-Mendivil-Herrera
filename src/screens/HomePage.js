@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { db } from '../firebase/config';
 import Post from '../components/Posteo'; 
 
-function HomePage() {
+function HomePage( props ) {
     const [listaPosts, setListaPosts] = useState([]);
 
     useEffect(() => {
@@ -32,7 +32,7 @@ function HomePage() {
                 <FlatList
                     data={listaPosts}
                     keyExtractor={item => item.id}
-                    renderItem={({ item }) => <Post data={item.data} />}
+                    renderItem={({ item }) => <Post data={item.data} navigation={props.navigation} />}
                 />
             )}
         </View>

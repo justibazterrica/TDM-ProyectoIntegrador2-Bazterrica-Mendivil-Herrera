@@ -4,11 +4,11 @@ import { db } from '../firebase/config';
 import NuevoComentario from '../components/NuevoComentario';
 import Comentar from '../components/Comentar';
 
-function Comentarios() {
+function Comentarios(props) {
     const [listaComentarios, setListaComentarios] = useState([]);
 
     useEffect(() => {
-        db.collection('comentarios')
+        db.collection('posts')
             .orderBy('createdAt', 'desc')
             .onSnapshot(docs => {
                 let comentariosAux = [];
@@ -26,7 +26,7 @@ function Comentarios() {
 
     return (
         <View style={styles.container}>
-            <Comentar />
+            <Comentar  id={props.route.params.id} />
             <Text style={styles.title}>Comentarios</Text>
             {listaComentarios.length === 0 ? (
                 <Text style={styles.nocoments}>No hay comentarios aún.</Text>

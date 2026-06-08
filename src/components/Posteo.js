@@ -17,7 +17,7 @@ export default function Posteo( props ) {
                 <Text style={styles.likes}>Likes: </Text>
                 <Text style={styles.text}>Creador: {datosPost.email}</Text>
                 <Text style={styles.text}>{datosPost.descripcion}</Text>
-                <Pressable style={styles.button} onPress={() => props.navigation.navigate("Comentarios", { screens: "Comentarios" })}>
+                <Pressable style={styles.button} onPress={() => props.navigation.navigate("Comentarios", { screen: "Comentarios", params: { id: props.data.id } })}>
                     <Text style={styles.buttonText}>Comentar</Text>
                 </Pressable>
 

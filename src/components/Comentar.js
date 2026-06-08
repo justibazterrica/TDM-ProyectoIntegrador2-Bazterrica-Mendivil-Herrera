@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, StyleSheet, Alert } from 'react-native';
-import { db, auth } from '../firebase/config';
+import { db, auth, firebase, firestore, FieldValue } from '../firebase/config';
 
 
 function comentar( props ) {
     const [comentario, setComentario] = useState('');
     const usuarioActual = auth.currentUser;
+    const idcomentario = props.id;
 
     function nuevoComentario() {
 
-        db.collection('posts').add({
-            comentario: comentario,
-            email: usuarioActual.email,           
-                                                            
-        })
+        db.collection('posts')
+            .doc(idcomentario)
+            .update({
+                Coments: firebase.firestore.FieldValue.arrayUnion(comentario)
+       })
         .then(() => {
             setComentario('');
         })
         .catch(error => {
-            console.log("Error al crear el post: ", error);
+            console.log("Error al crear el comentario: ", error);
         });
         }
     
@@ -33,14 +34,14 @@ function comentar( props ) {
                 value={comentario}
             />
             <Pressable style={styles.button} onPress={nuevoComentario}>
-                <Text style={styles.buttonText}>Publicar</Text>
+                <Text style={styles.buttonText}>Comentar</Text>
             </Pressable>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, 
+    container: {
         padding: 20,},
     title: { fontSize: 24, 
         fontWeight: 'bold',
