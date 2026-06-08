@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     color: '#777',
-    textAlign: 'right',
   },
   noData: {
     color: '#777',
