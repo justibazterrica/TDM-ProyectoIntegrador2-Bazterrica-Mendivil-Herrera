@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { auth, db } from '../firebase/config';
 
 export default function Posteo( props ) {
     
@@ -12,9 +13,36 @@ export default function Posteo( props ) {
     } 
     else {
         const datosPost = props.data;
+
+        function likePost() {
+          if (datosPost.likes.includes(auth.currentUser.email)) {
+            let likesFiltrados = datosPost.likes.filter(email => email !== auth.currentUser.email);
+            
+            db.collection('posts')
+              .doc(props.id)
+              .update({
+                likes: likesFiltrados
+              })
+              .catch(error => console.log(error));
+
+          } else {
+            datosPost.likes.push(auth.currentUser.email);
+
+            db.collection('posts')
+              .doc(props.id)
+              .update({
+                  likes: datosPost.likes
+            })
+            .catch(error => console.log(error));
+         }
+      }
+
         return (
             <View style={styles.post}>
-                <Text style={styles.likes}>Likes: </Text>
+                <Text style={styles.likes}>Likes: {datosPost.likes.length}</Text>
+                <Pressable onPress={likePost}>
+                  <Text style={styles.comentario}>Me gusta</Text>
+                </Pressable>
                 <Text style={styles.text}>Creador: {datosPost.email}</Text>
                 <Text style={styles.text}>{datosPost.descripcion}</Text>
                 <Pressable style={styles.button} onPress={() => props.navigation.navigate("Comentarios", { screen: "Comentarios",  id: props.id })}>
