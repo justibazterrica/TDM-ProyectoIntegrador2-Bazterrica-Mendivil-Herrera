@@ -10,24 +10,20 @@ function Register(props) {
   const [error, setError] = useState("");
 
   function onSubmit() {
+
     auth.createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-
         db.collection('users').add({
           email: userCredential.user.email,
           username: username,
         })
-
         .then(() => {
           props.navigation.navigate('Login');
         })
-
-        .catch(e => console.log(e));
-
       })
+      .catch(error => setError(error.message));
 
   }
-
 
   return (
     <View style={styles.container}>
@@ -59,6 +55,8 @@ function Register(props) {
         value={password}
       />
 
+      <Text style={styles.error}> {error}</Text>
+
       <Pressable style={styles.button} onPress={() => onSubmit()}>
         <Text style={styles.buttonText}>Registrarse</Text>
       </Pressable>
@@ -67,6 +65,7 @@ function Register(props) {
         <Text style={styles.link}>¿Ya tenés cuenta? Iniciá sesión</Text>
       </Pressable>
 
+  
     </View>
   );
 }
@@ -118,6 +117,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
+
+  error:{
+    color: "red",
+    textAlign: "center",
+    margin: 10, 
+    backgroundColor: "rgb(255, 221, 221)",
+  }
 });
 
 export default Register;

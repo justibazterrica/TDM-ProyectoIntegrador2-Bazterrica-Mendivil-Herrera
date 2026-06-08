@@ -9,13 +9,17 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  function onSubmit() {
+  function onSubmit() { 
+
     auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         console.log("Login exitoso");
         props.navigation.navigate('TabNavigator');
       })
-    .catch(e => console.log(e));
+
+
+      .catch(error => setError(error.message))
+
   }
 
   return (
@@ -40,14 +44,17 @@ function Login(props) {
         value={password}
       />
 
+      <Text style={styles.error}> {error}</Text>
+
       <Pressable style={styles.button} onPress={() => onSubmit()}>
-        <Text style={styles.buttonText}>Ingresar</Text>
+        <Text style={styles.buttonTexto}>Ingresar</Text>
       </Pressable>
 
       <Pressable onPress={() => props.navigation.navigate('Register')}>
         <Text style={styles.link}>¿No tenés cuenta? Registrate</Text>
       </Pressable>
 
+    
     </View>
   );
 }
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
   },
 
 
-  buttonText: {
+  buttonTexto: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
@@ -96,6 +103,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
+
+  error:{
+    color: "red",
+    textAlign: "center",
+    margin: 10, 
+    backgroundColor: "rgb(255, 221, 221)",
+
+  }
 });
 
 export default Login;
