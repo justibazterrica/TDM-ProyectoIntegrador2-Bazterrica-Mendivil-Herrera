@@ -58,7 +58,7 @@ export default function Profile(props) {
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                     <View style={styles.post}>
-                        <Text>{item.data.descripcionPost}</Text>
+                        <Text>{item.data.descripcion}</Text>
                         <Text>
                             Likes: {item.data.likes ? item.data.likes.length : 0}
                         </Text>
