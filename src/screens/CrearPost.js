@@ -16,7 +16,8 @@ function CrearPost( props ) {
         db.collection('posts').add({
             descripcion: descripcion,          
             email: usuarioActual.email,           
-            createdAt: Date.now(),                 
+            createdAt: Date.now(), 
+            likeado: false,                
             likes: [],
             Coments: []                                                  
         })

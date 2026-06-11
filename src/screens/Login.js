@@ -26,7 +26,10 @@ useEffect(() => {
       })
 
 
-      .catch(error => setError(error.message))
+      .catch(error =>{ 
+        const errorPArseado = JSON.parse(error.message)
+        setError(errorPArseado.error.message)
+      })
 
   }
 
@@ -39,7 +42,10 @@ useEffect(() => {
         style={styles.field}
         placeholder="Email"
         keyboardType="email-address"
-        onChangeText={text => setEmail(text)}
+        onChangeText={text => {
+          setEmail(text)
+          setError("")
+        }}
         value={email}
       />
 
@@ -48,7 +54,10 @@ useEffect(() => {
         placeholder="Contraseña"
         keyboardType="default"
         secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
+        onChangeText={text => {
+          setPassword(text)
+          setError("")
+        }}
         value={password}
       />
 

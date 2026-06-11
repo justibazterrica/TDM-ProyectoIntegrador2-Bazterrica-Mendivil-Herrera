@@ -10,7 +10,11 @@ function Register(props) {
   const [error, setError] = useState("");
 
   function onSubmit() {
+    if (username == "") {
 
+            setError("Todos los campos deben estar completos.")
+            return
+          }
     auth.createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         db.collection('users').add({
@@ -18,7 +22,8 @@ function Register(props) {
           username: username,
         })
         .then(() => {
-          props.navigation.navigate('Login');
+            props.navigation.navigate('Login')
+          
         })
       })
       .catch(error => setError(error.message));
@@ -34,7 +39,10 @@ function Register(props) {
         style={styles.field}
         placeholder="Nombre de usuario"
         keyboardType="default"
-        onChangeText={text => setUsername(text)}
+        onChangeText={text => {
+          setUsername(text)
+          setError("")
+        }}
         value={username}
       />
 
@@ -42,7 +50,10 @@ function Register(props) {
         style={styles.field}
         placeholder="Email"
         keyboardType="email-address"
-        onChangeText={text => setEmail(text)}
+        onChangeText={text => {
+          setEmail(text)
+          setError("")
+        }}
         value={email}
       />
 
@@ -51,7 +62,10 @@ function Register(props) {
         placeholder="Contraseña"
         keyboardType="default"
         secureTextEntry={true}
-        onChangeText={text => setPassword(text)}
+        onChangeText={text => {
+          setPassword(text)
+          setError("")
+        }}
         value={password}
       />
 

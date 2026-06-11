@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { auth, db } from '../firebase/config';
 
 export default function Posteo( props ) {
+
+
     
     if (props.data == {}) {
         return (
@@ -21,7 +23,11 @@ export default function Posteo( props ) {
             db.collection('posts')
               .doc(props.id)
               .update({
-                likes: likesFiltrados
+                likes: likesFiltrados,
+                likeado: false
+              })
+              .then(() => {
+                console.log('Post deslikeado correctamente');
               })
               .catch(error => console.log(error));
 
@@ -31,18 +37,27 @@ export default function Posteo( props ) {
             db.collection('posts')
               .doc(props.id)
               .update({
-                  likes: datosPost.likes
+                  likes: datosPost.likes,
+                  likeado: true
+
             })
+              .then(() => {
+                console.log('Post likeado correctamente');
+              })
             .catch(error => console.log(error));
          }
       }
 
         return (
             <View style={styles.post}>
-                <Text style={styles.likes}>Likes: {datosPost.likes.length}</Text>
                 <Pressable onPress={likePost}>
-                  <Text style={styles.comentario}>Me gusta</Text>
+                  {datosPost.likeado === true ?(
+                    <Text style={styles.comentario}>No me gusta</Text>
+                  ): (
+                    <Text style={styles.comentario}>Me gusta</Text>
+                  )}
                 </Pressable>
+                <Text style={styles.likes}>Likes: {datosPost.likes.length}</Text>
                 <Text style={styles.text}>Creador: {datosPost.email}</Text>
                 <Text style={styles.text}>{datosPost.descripcion}</Text>
                 <Pressable style={styles.button} onPress={() => props.navigation.navigate("Comentarios", { screen: "Comentarios",  id: props.id })}>
@@ -90,8 +105,7 @@ const styles = StyleSheet.create({
   },
   comentario: {
     fontSize: 12,
-    color: '#777',
-    textAlign: 'right',
+    color: '#777'
   },
   button: {
     alignSelf: 'flex-start',

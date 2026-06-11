@@ -14,7 +14,9 @@ export default function Profile(props) {
                     setUserName(doc.data().userName);
                 });
             });
+    }, []);
 
+    useEffect(() => {
         db.collection('posts')
             .where('email', '==', auth.currentUser.email)
             .orderBy('createdAt', 'desc')

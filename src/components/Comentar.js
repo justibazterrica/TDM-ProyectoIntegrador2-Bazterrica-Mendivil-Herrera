@@ -12,13 +12,13 @@ function comentar( props ) {
     function nuevoComentario() {
 
         db.collection('posts')
-            .doc(idComentario)
-            .update({
-                Coments: firebase.firestore.FieldValue.arrayUnion({
-                    comentario: comentario,
-                    email: usuarioActual.email,
-                })
+        .doc(idComentario)
+        .update({
+            Coments: firebase.firestore.FieldValue.arrayUnion({
+                comentario: comentario,
+                email: usuarioActual.email,
             })
+        })
         .then(() => {
             setComentario('');
         })
@@ -37,7 +37,7 @@ function comentar( props ) {
                 onChangeText={text => setComentario(text)}
                 value={comentario}
             />
-            <Pressable style={styles.button} onPress={nuevoComentario}>
+            <Pressable style={styles.button} onPress={() => nuevoComentario()}>
                 <Text style={styles.buttonText}>Comentar</Text>
             </Pressable>
         </View>
