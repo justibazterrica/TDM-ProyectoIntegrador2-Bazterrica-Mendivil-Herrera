@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, FlatList, StyleSheet } from 'react-native';
 import { auth, db } from '../firebase/config';
+import Post from '../components/Posteo';
 
 export default function Profile(props) {
     const [userName, setUserName] = useState('');
@@ -55,18 +56,15 @@ export default function Profile(props) {
 
             <Text style={styles.subtitle}>Mis posteos</Text>
 
-            <FlatList
-                data={posts}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                    <View style={styles.post}>
-                        <Text>{item.data.descripcion}</Text>
-                        <Text>
-                            Likes: {item.data.likes ? item.data.likes.length : 0}
-                        </Text>
-                    </View>
-                )}
-            />
+            {posts.length === 0 ? (
+                            <Text style={styles.noPosts}>No hay publicaciones aún.</Text>
+                        ) : (
+                            <FlatList
+                                data={posts}
+                                keyExtractor={item => item.id}
+                                renderItem={({ item }) => <Post id={item.id} data={item.data} navigation={props.navigation} />}
+                            />
+                        )}
         </View>
     );
 }
@@ -106,10 +104,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    post: {
-        marginBottom: 15,
+    noPosts: { textAlign: 'center', 
+        marginTop: 20, 
+        color: '#777' },
+    post: { marginBottom: 15,
         padding: 15,
         backgroundColor: '#fff',
-        borderRadius: 8,
-    },
+        borderRadius: 8,}
 });

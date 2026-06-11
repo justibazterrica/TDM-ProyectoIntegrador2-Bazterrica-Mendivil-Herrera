@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/HomePage';
 import Profile from '../screens/Profile';
 import Post from '../screens/CrearPost';
+import Comentarios from '../screens/Comentarios';
+import comentariosNavegacion from './comentariosNavegacion';
 import { TurboModuleRegistry } from 'react-native';
 
 
@@ -16,7 +18,7 @@ function TabNavigator() {
 
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={comentariosNavegacion}
         options = {{headerShown: false}}
       />
 
@@ -32,7 +34,7 @@ function TabNavigator() {
         options = {{headerShown: false}}
         
       />
-
+      
     </Tab.Navigator>
   );
 }

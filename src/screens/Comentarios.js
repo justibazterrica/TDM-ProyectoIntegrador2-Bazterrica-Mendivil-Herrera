@@ -30,9 +30,7 @@ function Comentarios(props) {
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.button} onPress={() => props.navigation.navigate('TabNavigator')}>
-                <Text style={styles.buttonText}>Volver</Text>
-            </Pressable>
+            
             <Comentar  id={props.route.params.id} />
             <Text style={styles.title}>Comentarios</Text>
             {listaComentarios.length === 0 ? (
